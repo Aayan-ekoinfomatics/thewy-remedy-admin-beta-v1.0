@@ -130,7 +130,7 @@ const Logs = () => {
                                         >
                                             <div className="w-full  flex justify-start items-center ">
                                                 <p className="text-black text-[15px] font-medium cursor-pointer">
-                                                    {data?.name}
+                                                    {data?.name?.split('|')[0]}
                                                 </p>
                                             </div>
                                             <div className="w-full flex justify-start items-center ">

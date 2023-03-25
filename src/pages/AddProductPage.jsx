@@ -199,7 +199,7 @@ const AddProductPage = () => {
   }, []);
 
   const submitPageData = () => {
-    axios.put(import.meta.env.VITE_BASE_ADDRESS + 'cms/addNewProduct', {data: pageData}).then((response) => {
+    axios.put(import.meta.env.VITE_BASE_ADDRESS + 'cms/addNewProduct', { data: pageData }).then((response) => {
       console.log(response?.data)
       if (response?.data?.status) {
         // alert(response?.data?.message)
@@ -212,9 +212,9 @@ const AddProductPage = () => {
           // draggable: true,
           progress: undefined,
           theme: "colored",
-      })
+        })
         navigate('/products')
-      }else {
+      } else {
         // alert(response?.data?.message)
         toast.error(response?.data?.message, {
           position: "top-right",
@@ -225,7 +225,7 @@ const AddProductPage = () => {
           // draggable: true,
           progress: undefined,
           theme: "colored",
-      })
+        })
       }
     })
   }
@@ -530,7 +530,7 @@ const AddProductPage = () => {
                   + Add Variants
                 </button>
                 <div
-                  className={`w-[30vw] translate-y-[70%] mx-auto h-[37vh] fixed inset-0 z-[220] border-2 rounded-[15px] border-[#227638] bg-white ${popUpModal ? "block" : "hidden"
+                  className={`w-[30vw] translate-y-[70%] mx-auto h-[40vh] fixed inset-0 z-[220] border-2 rounded-[15px] border-[#227638] bg-white ${popUpModal ? "block" : "hidden"
                     }`}
                 >
                   <div className="w-full flex justify-end items-center p-4">
@@ -559,6 +559,7 @@ const AddProductPage = () => {
                           <label className="text-[13px]">Variant</label>
                           <input
                             type="number"
+                            placeholder="eg. 100"
                             className="p-2 rounded-md block  border-gray-400 border w-full outline-none"
                             onChange={(e) => {
                               setAddedVariant({
@@ -569,9 +570,25 @@ const AddProductPage = () => {
                           />
                         </div>
                         <div className="w-full flex flex-col justify-start items-start">
+                          <label className="text-[13px]">Unit</label>
+                          <input
+                            type="text"
+                            placeholder="eg. g/kg/ml/l"
+                            maxLength={2}
+                            className="p-2 rounded-md block  border-gray-400 border w-full outline-none"
+                            onChange={(e) => {
+                              setAddedVariant({
+                                ...addedVariant,
+                                unit: e?.target?.value,
+                              })
+                            }}
+                          />
+                        </div>
+                        <div className="w-full flex flex-col justify-start items-start">
                           <label className="text-[13px]">Price</label>
                           <input
                             type="number"
+                            placeholder="eg. 250"
                             className="p-2 rounded-md block  border-gray-400 border w-full outline-none"
                             onChange={(e) => {
                               setAddedVariant({
@@ -585,6 +602,7 @@ const AddProductPage = () => {
                           <label className="text-[13px]">Quantity</label>
                           <input
                             type="number"
+                            placeholder="eg. 2"
                             className="p-2 rounded-md block  border-gray-400 border w-full outline-none"
                             onChange={(e) => {
                               setAddedVariant({
@@ -598,6 +616,7 @@ const AddProductPage = () => {
                           <label className="text-[13px]">SKU</label>
                           <input
                             type="text"
+                            placeholder="eg. TH0301"
                             className="p-2 rounded-md block  border-gray-400 border w-full outline-none"
                             onChange={(e) => {
                               setAddedVariant({
@@ -609,7 +628,7 @@ const AddProductPage = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="w-full flex justify-end items-center mt-10">
+                    <div className="w-full flex justify-end items-center mt-5">
                       <button className="py-2 px-4 bg-[#35854b] text-[14px] rounded-[7px] text-white" onClick={() => {
                         console.log(addedVariant)
                         setPopUpModal(false)
@@ -733,8 +752,8 @@ const AddProductPage = () => {
                         />
                         <div className=" text-center text-gray-500  flex justify-center items-center">
                           <DeleteIcon className="ml-2 cursor-pointer" onClick={() => {
-                          pageData.variant_data.splice(index,1)
-                          }}/>
+                            pageData.variant_data.splice(index, 1)
+                          }} />
                         </div>
                       </div>
                     );

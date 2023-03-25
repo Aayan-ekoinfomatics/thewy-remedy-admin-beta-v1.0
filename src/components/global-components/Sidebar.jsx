@@ -20,8 +20,8 @@ import log_active from '../../assets/img/sidebar/log_active.svg'
 import log_inactive from '../../assets/img/sidebar/log_inactive.svg'
 import product from "../../assets/icons/product.svg";
 import eko from "../../assets/img/sidebar/eko.svg";
-import logo from "../../assets/img/sidebar/logo.svg";
-import logo_sm from "../../assets/img/sidebar/logo_sm.svg";
+import logo from "../../assets/icons/logo_dark.png";
+// import logo_sm from "../../assets/icons/logo_sm.svg";
 import logout from '../../assets/icons/logout-square.svg'
 // import LogoutIcon from '@mui/icons-material/Logout';
 
@@ -47,12 +47,12 @@ const Sidebar = () => {
         <img
           src={logo}
           alt=""
-          className="w-[90%]  max-w-[150px] hidden 2xl:block"
+          className="w-[90%] aspect-square max-w-[150px] hidden 2xl:block"
         />
         <img
-          src={logo_sm}
+          src={logo}
           alt=""
-          className="w-[70%]  max-w-[150px]  2xl:hidden"
+          className="w-[70%] aspect-square max-w-[50px]  2xl:hidden"
         />
       </div>
 

@@ -401,7 +401,7 @@ const ProductsEditPage = () => {
       {/* all content */}
       <div>
         {/* header */}
-        <div className="flex justify-between items-center z-[150] sticky top-0 py-5 bg-[#FBFFF4] ">
+        <div className="flex justify-between items-center sticky top-0 py-5 bg-[#FBFFF4] ">
           <div>
             <h1 className="text-xl ">
               Product{" "}
@@ -691,7 +691,7 @@ const ProductsEditPage = () => {
                   + Add Variants
                 </button>
                 <div
-                  className={`w-[30vw] translate-y-[70%] mx-auto h-[37vh] fixed inset-0 z-[220] border-2 rounded-[15px] border-[#227638] bg-white ${popUpModal ? "block" : "hidden"
+                  className={`w-[30vw] translate-y-[70%] mx-auto h-[40vh] fixed inset-0 z-[220] border-2 rounded-[15px] border-[#227638] bg-white ${popUpModal ? "block" : "hidden"
                     }`}
                 >
                   <div className="w-full flex justify-end items-center p-4">
@@ -717,6 +717,7 @@ const ProductsEditPage = () => {
                           <label className="text-[13px]">Variant</label>
                           <input
                             type="number"
+                            placeholder="eg. 100"
                             className="p-2 rounded-md block  border-gray-400 border w-full outline-none"
                             onChange={(e) => {
                               setAddedVariant({
@@ -727,9 +728,25 @@ const ProductsEditPage = () => {
                           />
                         </div>
                         <div className="w-full flex flex-col justify-start items-start">
-                          <label className="text-[13px]">Price</label>
+                          <label className="text-[13px]">Unit</label>
                           <input
+                            type="text"
+                            placeholder="eg. g/kg/ml/l"
+                            maxLength={2}
+                            className="p-2 rounded-md block  border-gray-400 border w-full outline-none"
+                            onChange={(e) => {
+                              setAddedVariant({
+                                ...addedVariant,
+                                unit: e?.target?.value,
+                              })
+                            }}
+                          />
+                        </div>
+                        <div className="w-full flex flex-col justify-start items-start">
+                          <label className="text-[13px]">Price <span className="font-serif">&#40;₹&#41;</span> </label>
+                          <div className="flex items-center gap-1"><input
                             type="number"
+                            placeholder="eg. 250"
                             className="p-2 rounded-md block  border-gray-400 border w-full outline-none"
                             onChange={(e) => {
                               setAddedVariant({
@@ -738,11 +755,13 @@ const ProductsEditPage = () => {
                               })
                             }}
                           />
+                          </div>
                         </div>
                         <div className="w-full flex flex-col justify-start items-start">
                           <label className="text-[13px]">Quantity</label>
                           <input
                             type="number"
+                            placeholder="eg. 2"
                             className="p-2 rounded-md block  border-gray-400 border w-full outline-none"
                             onChange={(e) => {
                               setAddedVariant({
@@ -756,6 +775,7 @@ const ProductsEditPage = () => {
                           <label className="text-[13px]">SKU</label>
                           <input
                             type="text"
+                            placeholder="eg. TH0301"
                             className="p-2 rounded-md block  border-gray-400 border w-full outline-none"
                             onChange={(e) => {
                               setAddedVariant({
@@ -767,7 +787,7 @@ const ProductsEditPage = () => {
                         </div>
                       </div>
                     </div>
-                    <div className="w-full flex justify-end items-center mt-10">
+                    <div className="w-full flex justify-end items-center my-4">
                       <button className="py-2 px-4 bg-[#35854b] text-[14px] rounded-[7px] text-white" onClick={() => {
                         setPopUpModal(false)
                         setPageData({

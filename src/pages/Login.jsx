@@ -34,7 +34,7 @@ const Login = () => {
       <div className="fixed inset-0 h-screen flex justify-center items-center p-5">
         <div className="bg-white p-5 rounded-xl w-full max-w-[350px]">
           <div className="flex justify-center items-center gap-5 flex-col">
-            <img src="../realvedic_logo_big.svg" alt="" />
+            {/* <img src="../realvedic_logo_big.svg" alt="" /> */}
             {/* <h1 className="text-lg tracking-wider ">Admin Panel</h1> */}
           </div>
 

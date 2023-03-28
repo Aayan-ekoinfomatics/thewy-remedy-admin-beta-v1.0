@@ -21,6 +21,8 @@ import { MonthList } from "../helpers/date_list/date_list";
 import product_data from "../mockApi/productPageApi";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
+import not_found from '../assets/icons/no_data.svg'
 
 const ProductsPage = () => {
   // local states
@@ -126,127 +128,173 @@ const ProductsPage = () => {
         <div className=" rounded-[25px]   overflow-hidden  border-[#7d9383] border-2 bg-white  p-0">
           <div className="overflow-x-scroll ">
             <div className="  rounded-[25px] p-5 pr-0 ">
-              <div className="w-full grid grid-cols-[80px_150px_1fr_1fr_1fr_1fr_80px] lg:grid-cols-[100px_280px_1fr_1fr_1fr_1fr_100px] text-gray-500 text-[14px] font-[500]  rounded-t-[15px] pr-2 border-b py-2 pb-5 gap-2 ">
-                {pageData?.titles?.map((data, index) => {
-                  return (
-                    <div
-                      key={index}
-                      className={`w-full flex justify-start items-center
+              {
+                pageData?.content?.length > 0 ?
+                  <>
+                    <div className="w-full grid grid-cols-[100px_150px_1fr_1fr_1fr_1fr_80px] lg:grid-cols-[100px_280px_1fr_1fr_1fr_1fr_100px] text-gray-500 text-[14px] font-[500]  rounded-t-[15px] pr-2 border-b py-2 pb-5 gap-2 ">
+                      {pageData?.titles?.map((data, index) => {
+                        return (
+                          <div
+                            key={index}
+                            className={`w-full flex justify-start items-center
                       `}
-                    >
-                      <h1
-                        className={` ${data === "Product ID" ? "max-w-[100px]" : ""
-                          }  text-center`}
-                      >
-                        {data}
-                      </h1>
+                          >
+                            <h1
+                              className={` ${data === "Product ID" ? "max-w-[100px]" : ""
+                                }  text-center`}
+                            >
+                              {data}
+                            </h1>
+                          </div>
+                        );
+                      })}
                     </div>
-                  );
-                })}
-              </div>
 
-              <div className="w-full  rounded-b-[15px]  text-[13px] text-[#464646] h-[65vh] overflow-y-scroll ">
-                {pageData?.content
-                  ?.filter((filterValue) => {
-                    if (searchData === "") {
-                      return filterValue;
-                    } else if (
-                      filterValue?.buyer?.name
-                        ?.toLowerCase()
-                        ?.includes(searchData?.toLowerCase()) ||
-                      filterValue?.product_name
-                        ?.toLowerCase()
-                        ?.includes(searchData?.toLowerCase()) ||
-                      filterValue?.category
-                        ?.toString()
-                        ?.includes(searchData?.toLowerCase()) ||
-                      filterValue?.hsn
-                        ?.toString()
-                        ?.toLowerCase()
-                        ?.includes(searchData?.toLowerCase()) ||
-                      filterValue?.stock
-                        ?.toString()
-                        ?.toLowerCase()
-                        ?.includes(searchData?.toLowerCase())
-                    ) {
-                      return filterValue;
-                    }
-                  })
-                  .map((data, i) => (
-                    <div
-                      className="grid grid-cols-[80px_150px_1fr_1fr_1fr_1fr_80px] lg:grid-cols-[100px_280px_1fr_1fr_1fr_1fr_100px] gap-2 lg:gap-4 border-b border-b-[#e6e6e69f] py-5 text-black text-sm "
-                      key={i}
-                    >
-                      <div className="w-full max-w-[100px] flex justify-start items-center ">
-                        <Link to={"/products/" + data?.product_id}>
-                          <p className="text-black font-medium cursor-pointer text-[15px]">
-                            #{data?.product_id}
-                          </p>
-                        </Link>
-                      </div>
-                      <div className="w-full flex justify-start items-center text-[15px]">
-                        <p className=" ">{data?.product_name}</p>
-                      </div>
-                      <div className="w-full flex justify-start items-center text-[15px]">
-                        <p className=" ">{data?.category}</p>
-                      </div>
-                      <div className="w-full flex justify-start items-center text-[15px]">
-                        <p className="">{data?.hsn}</p>
-                      </div>
-                      <div className="w-full flex justify-start items-center text-[15px]">
-                        <p className="">{data?.stock}</p>
-                      </div>
+                    <div className="w-full  rounded-b-[15px]  text-[13px] text-[#464646] h-[65vh] overflow-y-scroll ">
+                      {pageData?.content
+                        ?.filter((filterValue) => {
+                          if (searchData === "") {
+                            return filterValue;
+                          } else if (
+                            filterValue?.buyer?.name
+                              ?.toLowerCase()
+                              ?.includes(searchData?.toLowerCase()) ||
+                            filterValue?.product_name
+                              ?.toLowerCase()
+                              ?.includes(searchData?.toLowerCase()) ||
+                            filterValue?.category
+                              ?.toString()
+                              ?.includes(searchData?.toLowerCase()) ||
+                            filterValue?.hsn
+                              ?.toString()
+                              ?.toLowerCase()
+                              ?.includes(searchData?.toLowerCase()) ||
+                            filterValue?.stock
+                              ?.toString()
+                              ?.toLowerCase()
+                              ?.includes(searchData?.toLowerCase())
+                          ) {
+                            return filterValue;
+                          }
+                        })
+                        .map((data, i) => (
+                          <div
+                            className="grid grid-cols-[100px_150px_1fr_1fr_1fr_1fr_80px] lg:grid-cols-[100px_280px_1fr_1fr_1fr_1fr_100px] gap-2 lg:gap-4 border-b border-b-[#e6e6e69f] py-5 text-black text-sm "
+                            key={i}
+                          >
+                            <div className="w-full max-w-[100px] flex justify-start items-center ">
+                              <Link to={"/products/" + data?.product_id}>
+                                <p className="text-black font-medium cursor-pointer text-[15px]">
+                                  #{data?.product_id}
+                                </p>
+                              </Link>
+                            </div>
+                            <div className="w-full flex justify-start items-center text-[15px]">
+                              <p className=" ">{data?.product_name}</p>
+                            </div>
+                            <div className="w-full flex justify-start items-center text-[15px]">
+                              <p className=" ">{data?.category}</p>
+                            </div>
+                            <div className="w-full flex justify-start items-center text-[15px]">
+                              <p className="">{data?.stock}</p>
+                            </div>
 
-                      <div className="w-full flex gap-4 justify-start items-center ">
-                        {/* {data?.status === "Booked" && (
+                            <div className="w-full flex gap-4 justify-start items-center ">
+                              {/* {data?.status === "Booked" && (
                           <p className="bg-[#e99f15] rounded-full w-[8px] aspect-square"></p>
                         )} */}
-                        {data?.status && (
-                          <p className="bg-[#00ac69] rounded-full w-[8px] aspect-square"></p>
-                        )}
-                        {!data?.status && (
-                          <p className="bg-[#FF0000] rounded-full w-[8px] aspect-square"></p>
-                        )}
-                        <p className="">{data?.status ? 'Active' : 'Inactive'}</p>
-                      </div>
+                              {data?.status && (
+                                <p className="bg-[#00ac69] rounded-full w-[8px] aspect-square"></p>
+                              )}
+                              {!data?.status && (
+                                <p className="bg-[#FF0000] rounded-full w-[8px] aspect-square"></p>
+                              )}
+                              <p className="">{data?.status ? 'Active' : 'Inactive'}</p>
+                            </div>
 
-                      <div className="w-full py-4 flex justify-start  items-center gap-6">
-                        <div>
-                          <Link to={"/products/" + data?.product_id}>
-                            <img
-                              src={edit_icon}
-                              className="cursor-pointer w-[20px]"
-                              alt=""
-                            />
-                          </Link>
-                        </div>
-                        <div>
-                          <img
-                            src={delete_icon}
-                            className="cursor-pointer w-[16px]"
-                            alt=""
-                            onClick={async () => {
+                            <div className="w-full py-4 flex justify-start  items-center gap-6">
+                              <div>
+                                <Link to={"/products/" + data?.product_id}>
+                                  <img
+                                    src={edit_icon}
+                                    className="cursor-pointer w-[20px]"
+                                    alt=""
+                                  />
+                                </Link>
+                              </div>
+                              <div>
+                                <img
+                                  src={delete_icon}
+                                  className="cursor-pointer w-[16px]"
+                                  alt=""
+                                  onClick={async () => {
 
-                              if (confirm('Please confirm to delete product')) {
-                                let formdata = new FormData;
-                                formdata.append('product_id', data?.product_id);
-                                formdata.append('token', localStorage.getItem('admin-token'));
-                                await axios.post(import.meta.env.VITE_BASE_ADDRESS + 'cms/adminProductDelete', formdata).then((response) => {
-                                  console.log(response?.data)
-                                })
-                                await axios.post(import.meta.env.VITE_BASE_ADDRESS + "cms/adminProductView", formdata)?.then((response) => {
-                                  console.log("adminProductView response", response?.data);
-                                  setPageData(response?.data);
-                                });
-                              }
-                            }
-                            }
-                          />
+                                    if (confirm('Please confirm to delete product')) {
+                                      let formdata = new FormData;
+                                      formdata.append('product_id', data?.product_id);
+                                      formdata.append('token', localStorage.getItem('admin-token'));
+                                      await axios.post(import.meta.env.VITE_BASE_ADDRESS + 'cms/adminProductDelete', formdata).then((response) => {
+                                        console.log(response?.data)
+                                        if (response?.data?.status) {
+                                          toast.warn(response?.data?.message, {
+                                            position: "top-right",
+                                            autoClose: 2000,
+                                            hideProgressBar: false,
+                                            closeOnClick: true,
+                                            pauseOnHover: true,
+                                            // draggable: true,
+                                            progress: undefined,
+                                            theme: "colored",
+                                          })
+                                        }
+                                      })
+                                      await axios.post(import.meta.env.VITE_BASE_ADDRESS + "cms/adminProductView", formdata)?.then((response) => {
+                                        console.log("adminProductView response", response?.data);
+                                        setPageData(response?.data);
+                                      });
+                                    }
+                                  }
+                                  }
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  </>
+                  :
+                  <>
+                    <div className="w-full grid grid-cols-[80px_150px_1fr_1fr_1fr_80px] lg:grid-cols-[100px_280px_1fr_1fr_1fr_100px] text-gray-500 text-[14px] font-[500]  rounded-t-[15px] pr-2 border-b py-2 pb-5 gap-2 ">
+                      {pageData?.titles?.map((data, index) => {
+                        return (
+                          <div
+                            key={index}
+                            className={`w-full flex justify-start items-center
+                      `}
+                          >
+                            <h1
+                              className={` ${data === "Product ID" ? "max-w-[100px]" : ""
+                                }  text-center`}
+                            >
+                              {data}
+                            </h1>
+                          </div>
+                        );
+                      })}
+                    </div>
+
+                    <div className="w-full  rounded-b-[15px]  text-[13px] text-[#464646] h-[65vh] overflow-y-scroll ">
+                      <div
+                        className="flex justify-center items-center border-b border-b-[#e6e6e69f] h-full py-5 text-black text-sm "
+                      >
+                        <div className="w-full flex flex-col justify-center items-center gap-4">
+                          <img src={not_found} className='w-full max-w-[150px] aspect-square mr-8' alt="" />
+                          <h1 className="">No Products</h1>
                         </div>
                       </div>
                     </div>
-                  ))}
-              </div>
+                  </>
+              }
             </div>
           </div>
         </div>

@@ -230,11 +230,11 @@ const AddProductPage = () => {
     })
   }
 
-  //   useEffect(() => {
-  //     console.log('pageData', pageData)
-  //     console.log('activeInputID', activeInputID);
-  //     console.log("activeMeta", activeMeta);
-  //   }, [pageData]);
+    useEffect(() => {
+      // console.log('pageData', pageData)
+      // console.log('activeInputID', activeInputID);
+      console.log("addedVariant", addedVariant);
+    }, [addedVariant]);
 
   return (
     <div className="p-5 pt-0 relative">
@@ -573,8 +573,8 @@ const AddProductPage = () => {
                           <label className="text-[13px]">Unit</label>
                           <input
                             type="text"
-                            placeholder="eg. g/kg/ml/l"
-                            maxLength={2}
+                            placeholder="eg. g/kg/ml/l/cap/tab"
+                            maxLength={4}
                             className="p-2 rounded-md block  border-gray-400 border w-full outline-none"
                             onChange={(e) => {
                               setAddedVariant({
@@ -640,6 +640,7 @@ const AddProductPage = () => {
                             price: addedVariant?.price,
                             quantity: addedVariant?.quantity,
                             sku: addedVariant?.sku,
+                            unit: addedVariant?.unit,
                           }],
                         })
                       }}>

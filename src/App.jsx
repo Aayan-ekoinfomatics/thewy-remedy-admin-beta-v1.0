@@ -45,7 +45,7 @@ function App() {
           {/* <Route path='*' element={<Navigate to={localStorage.getItem("status") === 'true' ? '/admin-dashboard' : '/login'} replace={true} />} /> */}
           <Route
             path="/"
-            element={<Navigate to={"/invoices"} replace={true} />}
+            element={<Navigate to={"/products"} replace={true} />}
           />
 
           <Route element={<Login />} path={"/login"} />
@@ -55,7 +55,7 @@ function App() {
             {/* <Route path='/admin-dashboard' element={<Dashboard />} /> */}
 
 
-            <Route element={<InvoicePage />} path={"/invoices"} />
+            {/* <Route element={<InvoicePage />} path={"/invoices"} /> */}
 
 
             <Route element={<ProductsPage />} path={"/products"} />

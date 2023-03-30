@@ -230,11 +230,11 @@ const AddProductPage = () => {
     })
   }
 
-    useEffect(() => {
-      // console.log('pageData', pageData)
-      // console.log('activeInputID', activeInputID);
-      console.log("addedVariant", addedVariant);
-    }, [addedVariant]);
+  useEffect(() => {
+    // console.log('pageData', pageData)
+    // console.log('activeInputID', activeInputID);
+    console.log("addedVariant", addedVariant);
+  }, [addedVariant]);
 
   return (
     <div className="p-5 pt-0 relative">
@@ -292,11 +292,23 @@ const AddProductPage = () => {
                       })
                     }}
                   />
-                  <img
-                    id="file_image"
-                    src={import.meta.env.VITE_BASE_ADDRESS + pageData?.images[0]}
-                    className={`w-full absolute top-0 left-0 aspect-square z-[100] `}
-                  />
+                  {
+
+
+                    <div className="absolute inset-0">
+                      {pageData?.images[0] === false ?
+                        <div className="flex justify-center items-center aspect-square z-[80]">
+                          <h1 className="text-[17px] text-gray-300">+ Add Image</h1>
+                        </div>
+                        :
+                        <img
+                          id="file_image"
+                          src={import.meta.env.VITE_BASE_ADDRESS + pageData?.images[0]}
+                          className={`w-full absolute top-0 left-0 aspect-square z-[100] `}
+                        />
+                      }
+                    </div>
+                  }
                 </label>
               </div>
 
@@ -336,11 +348,20 @@ const AddProductPage = () => {
                               })
                             }}
                           />
-                          <img
-                            id="file_image"
-                            src={import.meta.env.VITE_BASE_ADDRESS + data}
-                            className={`w-full absolute top-0 left-0 aspect-square z-[100] `}
-                          />
+                          <div className="absolute inset-0">
+                          {
+                            data ?
+                              <img
+                                id="file_image"
+                                src={import.meta.env.VITE_BASE_ADDRESS + data}
+                                className={`w-full absolute top-0 left-0 aspect-square z-[100] `}
+                              />
+                              :
+                              <div className="flex justify-center items-center z-[100] aspect-square">
+                                <h1 className="text-[12px] text-gray-300">+ Add Image</h1>
+                              </div>
+                          }
+                          </div>
                         </label>
                       </div>
                     );

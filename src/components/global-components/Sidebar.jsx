@@ -34,22 +34,24 @@ const Sidebar = () => {
 
   return (
     <div
-      className={` 2xl:w-[250px] h-screen poppins fixed left-0 bg-[#227638] z-[170] flex justify-between flex-col  pt-5`}
+      className={` 2xl:w-[250px] h-screen poppins fixed left-0 bg-[#227638] z-[170] flex justify-between items-center flex-col  pt-5`}
     >
-      <div className="flex-1 w-full flex justify-center items-start max-h-[100px]  ">
-        <img
-          src={logo}
-          alt=""
-          className="w-[90%] aspect-square max-w-[150px] hidden 2xl:block"
-        />
-        <img
-          src={logo}
-          alt=""
-          className="w-[70%] aspect-square max-w-[50px]  2xl:hidden"
-        />
+      <div className="2xl:p-10 max-w-[90px] 2xl:max-w-[200px]">
+        <div className="flex-1 w-full flex justify-center items-center bg-white py-2 2xl:py-0 2xl:pb-1 2xl:px-1 rounded-[50%]">
+          <img
+            src={logo}
+            alt=""
+            className="w-full hidden 2xl:block"
+          />
+          <img
+            src={logo}
+            alt=""
+            className="w-[70%] max-w-[50px]  2xl:hidden"
+          />
+        </div>
       </div>
 
-      <div className="flex-1 w-full flex flex-col justify-center items-center mt-20">
+      <div className="flex-1 w-full flex flex-col justify-center items-center mt-10">
         <div className="flex flex-col items-center w-full">
 
           <Link
@@ -232,9 +234,9 @@ const Sidebar = () => {
           navigate('/login')
         }}>
           <img src={logout} className='w-[18px]' alt="" />
-          <h1 className="text-[15px] ">Logout</h1>
+          <h1 className="text-[15px] hidden 2xl:block">Logout</h1>
         </div>
-        <div className=" flex justify-center items-center gap-2 ">
+        <div className="hidden 2xl:flex justify-center items-center gap-2 ">
           <h1 className="text-[12px] text-gray-300 italic mr-2">Powered by</h1>
           <span className="">
             <img src={eko} className="w-[25px]" alt="" />

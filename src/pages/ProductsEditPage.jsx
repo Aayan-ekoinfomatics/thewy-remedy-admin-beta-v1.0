@@ -5,159 +5,10 @@ import cross from "../assets/icons/cross.svg";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
+import EditIcon from '@mui/icons-material/Edit';
 
 const ProductsEditPage = () => {
-  const [pageData, setPageData] = useState(
-    //   {
-    //   images: ["", "", "", ""],
-    //   name: "Angaya Podi",
-    //   id: 554254,
-    //   status: "In Stock",
-    //   category: "Spices",
-    //   hsn: 354564646464,
-    //   variant_data: [
-    //     {
-    //       variant_name: "100g",
-    //       price: 50,
-    //       quantity: 80,
-    //       sku: 115245245465,
-    //     },
-
-    //     {
-    //       variant_name: "200g",
-    //       price: 100,
-    //       quantity: 50,
-    //       sku: 115245245466,
-    //     },
-
-    //     {
-    //       variant_name: "250g",
-    //       price: 150,
-    //       quantity: 120,
-    //       sku: 115245245467,
-    //     },
-    //     {
-    //       variant_name: "100g",
-    //       price: 50,
-    //       quantity: 80,
-    //       sku: 115245245465,
-    //     },
-
-    //     {
-    //       variant_name: "200g",
-    //       price: 100,
-    //       quantity: 50,
-    //       sku: 115245245466,
-    //     },
-
-    //     {
-    //       variant_name: "250g",
-    //       price: 150,
-    //       quantity: 120,
-    //       sku: 115245245467,
-    //     },
-    //   ],
-    //   sibling_product: {
-    //     product_id: 12245,
-    //     product_name: "Multigrain Dosa Mix",
-    //     img: "",
-    //     category: "Flour Packs",
-    //   },
-
-    //   nutritional_info: [
-    //     {
-    //       n_name: "Total Fat",
-    //       n_value: 5,
-    //       n_unit: "g",
-    //     },
-    //     {
-    //       n_name: "Protien",
-    //       n_value: 10,
-    //       n_unit: "g",
-    //     },
-    //     {
-    //       n_name: "Carbohydrate",
-    //       n_value: 16,
-    //       n_unit: "g",
-    //     },
-    //     {
-    //       n_name: "Energy",
-    //       n_value: 8,
-    //       n_unit: "kcal",
-    //     },
-    //   ],
-
-    //   meta_fields: [
-    //     {
-    //       m_name: "Label 1",
-    //       m_value: "Lorem Ipsum1",
-    //     },
-    //     {
-    //       m_name: "Label 2",
-    //       m_value: "Lorem Ipsum2",
-    //     },
-    //     {
-    //       m_name: "Label 3",
-    //       m_value: "Lorem Ipsum3",
-    //     },
-    //     {
-    //       m_name: "Label 4",
-    //       m_value: "Lorem Ipsum4",
-    //     },
-    //     {
-    //       m_name: "Label 5",
-    //       m_value: "Lorem Ipsum5",
-    //     },
-    //   ],
-
-    //   reviews: [
-    //     {
-    //       img: "",
-    //       f_name: "Ayush",
-    //       l_name: "Koul",
-    //       comment: "Lorem ipsum dolor sit",
-    //     },
-    //     {
-    //       img: "",
-    //       f_name: "Utkarsh",
-    //       l_name: "Koul",
-    //       comment: "Lorem ipsum dolor sit",
-    //     },
-    //   ],
-
-    //   status_list: ["In Stock", "Out of Stock"],
-    //   category_list: [
-    //     {
-    //       name: "Health Mix",
-    //       hsn: 112452246585,
-    //     },
-    //     {
-    //       name: "Dosa Mix",
-    //       hsn: 112452246585,
-    //     },
-    //     {
-    //       name: "Rasam & Soup",
-    //       hsn: 112452246585,
-    //     },
-    //     {
-    //       name: "Beverage Mix",
-    //       hsn: 112452246585,
-    //     },
-    //     {
-    //       name: "Spice Blends",
-    //       hsn: 112452246585,
-    //     },
-    //     {
-    //       name: "Flour Pack",
-    //       hsn: 112452246585,
-    //     },
-    //     {
-    //       name: "Noodles & Pasta",
-    //       hsn: 112452246585,
-    //     },
-    //   ],
-    // }
-  );
+  const [pageData, setPageData] = useState();
 
   const params = useParams();
 
@@ -179,7 +30,13 @@ const ProductsEditPage = () => {
 
   const [popUpModal, setPopUpModal] = useState(false);
 
+  const [editVariantData, setEditVariantData] = useState();
+
+  const [editPopUpModal, setEditPopUpModal] = useState(false);
+
   const [activeInputID, setActiveInputID] = useState();
+
+  const [activeVariantEditIndex, setActiveVariantEditIndex] = useState();
 
   const [activeImageIndex, setActiveImageIndex] = useState(0);
 
@@ -202,10 +59,12 @@ const ProductsEditPage = () => {
   }, []);
 
   useEffect(() => {
-    console.log(addedVariant)
-    console.log(pageData)
-  }, [addedVariant, pageData])
-  
+    // console.log(activeVariantEditIndex, 'index')
+    // console.log(pageData?.variant_data[activeVariantEditIndex]?.variant_name?.split('')?.slice(4)?.join(''), 'object')
+    console.log(pageData?.variant_data, 'page_data')
+    console.log(editVariantData, 'edit_v_data')
+  }, [pageData, editVariantData])
+
 
   const submitPageData = async () => {
     await axios.post(import.meta.env.VITE_BASE_ADDRESS + 'cms/singleProductEdit', pageData).then((response) => {
@@ -295,11 +154,20 @@ const ProductsEditPage = () => {
                       })
                     }}
                   />
-                  <img
-                    id="file_image"
-                    src={import.meta.env.VITE_BASE_ADDRESS + pageData?.images[0]}
-                    className={`w-full absolute top-0 left-0 aspect-square z-[100] `}
-                  />
+                  <div className="absolute inset-0">
+                    {
+                      pageData?.images[0] === false ?
+                        <div className="flex justify-center items-center aspect-square">
+                          <h1>+ Add Image</h1>
+                        </div>
+                        :
+                        <img
+                          id="file_image"
+                          src={import.meta.env.VITE_BASE_ADDRESS + pageData?.images[0]}
+                          className={`w-full absolute top-0 left-0 aspect-square z-[100] `}
+                        />
+                    }
+                  </div>
                 </label>
               </div>
 
@@ -339,11 +207,21 @@ const ProductsEditPage = () => {
                               })
                             }}
                           />
-                          <img
-                            id="file_image"
-                            src={import.meta.env.VITE_BASE_ADDRESS + data}
-                            className={`w-full absolute top-0 left-0 aspect-square z-[100] `}
-                          />
+                          <div className="absolute inset-0">
+                            {
+                              data ?
+
+                                <img
+                                  id="file_image"
+                                  src={import.meta.env.VITE_BASE_ADDRESS + data}
+                                  className={`w-full absolute top-0 left-0 aspect-square z-[100] `}
+                                />
+                                :
+                                <div className="flex justify-center items-center aspect-square">
+                                  <h1 className="text-[13px]">+ Add Image</h1>
+                                </div>
+                            }
+                          </div>
                         </label>
                       </div>
                     );
@@ -533,6 +411,7 @@ const ProductsEditPage = () => {
                 >
                   + Add Variants
                 </button>
+
                 <div
                   className={`w-[30vw] translate-y-[70%] mx-auto h-[40vh] fixed inset-0 z-[220] border-2 rounded-[15px] border-[#227638] bg-white ${popUpModal ? "block" : "hidden"
                     }`}
@@ -663,7 +542,7 @@ const ProductsEditPage = () => {
                   <h1 className="text-sm text-gray-500  ">Price</h1>
                   <h1 className="text-sm text-gray-500  ">Quantity</h1>
                   <h1 className="text-sm text-gray-500  ">SKU</h1>
-                  <h1 className="text-sm text-gray-500  text-center  ">
+                  <h1 className="text-sm text-gray-500  text-center">
                     Action
                   </h1>
                 </div>
@@ -675,7 +554,7 @@ const ProductsEditPage = () => {
                         key={index}
                         className="grid grid-cols-5 gap-5 mb-5 "
                       >
-                        <h1>{data?.variant_name}</h1>
+                        <h1>{data?.variant_name} {data?.unit}</h1>
 
                         {/* price */}
                         <div className="flex gap-1 items-center rounded-md px-2 border-gray-400 border">
@@ -751,14 +630,250 @@ const ProductsEditPage = () => {
                           }
                           className="p-2 rounded-md block  border-gray-400 border w-full outline-none"
                         />
-                        <div className=" text-center text-gray-500  flex justify-center items-center">
-                          <DeleteIcon className="ml-2 cursor-pointer" onClick={() => {
+
+                        {/* actions  */}
+                        <div className=" text-center text-gray-500  flex justify-center items-center pl-2 gap-4">
+                          <DeleteIcon className=" cursor-pointer" onClick={() => {
                             pageData.variant_data.splice(index, 1)
+                          }} />
+                          <EditIcon className=" cursor-pointer" onClick={() => {
+                            if (activeVariantEditIndex === index) {
+                              setActiveVariantEditIndex(null)
+                            } else {
+                              setActiveVariantEditIndex(index)
+                            }
+                            setEditPopUpModal(!editPopUpModal);
+                            setEditVariantData({
+                              variant_name: data?.variant_name,
+                              price: data?.price,
+                              unit: data?.unit,
+                              sku: data?.sku,
+                              quantity: data?.quantity,
+                              id: data?.id
+                            })
                           }} />
                         </div>
                       </div>
                     );
                   })}
+
+
+                  {/* edit  pop - up */}
+                  <div className={`w-[30vw] translate-y-[70%] mx-auto h-[40vh] fixed inset-0 z-[220] border-2 rounded-[15px] border-[#227638] bg-white ${editPopUpModal ? "block" : "hidden"}`}>
+
+                    {/* cross icon */}
+                    <div className="w-full flex justify-end items-center p-4">
+                      <span>
+                        <img
+                          src={cross}
+                          className="w-[16px] cursor-pointer"
+                          onClick={() => setEditPopUpModal(false)}
+                          alt=""
+                        />
+                      </span>
+                    </div>
+
+                    <div className="w-full">
+                      <h1 className="text-[18px] pl-5">Edit variant</h1>
+                    </div>
+
+                    <div className="w-full px-5 mt-8">
+                      <div className="w-full">
+                        <div className="grid grid-cols-2 gap-5 justify-items-center place-items-center">
+                          <div className="w-full flex flex-col justify-start items-start">
+                            <label className="text-[13px]">Variant</label>
+                            <input
+                              type="number"
+                              placeholder="eg. 100"
+                              value={editVariantData?.variant_name}
+                              className="p-2 rounded-md block  border-gray-400 border w-full outline-none"
+                              onChange={(e) => {
+                                // setPageData({
+                                //   ...pageData,
+                                //   variant_data: pageData?.variant_data?.map(
+                                //     (single_variant_data, variant_key) => {
+                                //       if (single_variant_data?.id === activeVariantEditIndex) {
+                                //         return {
+                                //           ...single_variant_data,
+                                //           variant_name: e?.target?.value,
+                                //         };
+                                //       } else {
+                                //         return single_variant_data;
+                                //       }
+                                //     }
+                                //   ),
+                                // })
+                                setEditVariantData({
+                                  ...editVariantData,
+                                  variant_name: e?.target?.value,
+                                })
+                              }}
+                            />
+                          </div>
+                          <div className="w-full flex flex-col justify-start items-start">
+                            <label className="text-[13px]">Unit</label>
+                            <input
+                              type="text"
+                              placeholder="eg. g/kg/ml/l"
+                              value={editVariantData?.unit}
+                              maxLength={4}
+                              className="p-2 rounded-md block  border-gray-400 border w-full outline-none"
+                              onChange={(e) => {
+                                // setPageData({
+                                //   ...pageData,
+                                //   variant_data: pageData?.variant_data?.map(
+                                //     (single_variant_data, variant_key) => {
+                                //       if (single_variant_data?.id === activeVariantEditIndex) {
+                                //         return {
+                                //           ...single_variant_data,
+                                //           unit: e?.target?.value,
+                                //         };
+                                //       } else {
+                                //         return single_variant_data;
+                                //       }
+                                //     }
+                                //   ),
+                                // })
+                                setEditVariantData({
+                                  ...editVariantData,
+                                  unit: e?.target?.value,
+                                })
+                              }}
+                            />
+                          </div>
+                          <div className="w-full flex flex-col justify-start items-start">
+                            <label className="text-[13px]">Price <span className="font-serif">&#40;₹&#41;</span> </label>
+                            <div className="flex items-center gap-1"><input
+                              type="number"
+                              placeholder="eg. 250"
+                              value={editVariantData?.price}
+                              className="p-2 rounded-md block  border-gray-400 border w-full outline-none"
+                              onChange={(e) => {
+                                // setPageData({
+                                //   ...pageData,
+                                //   variant_data: pageData?.variant_data?.map(
+                                //     (single_variant_data, variant_key) => {
+                                //       if (single_variant_data?.id === activeVariantEditIndex) {
+                                //         return {
+                                //           ...single_variant_data,
+                                //           price: e?.target?.value,  
+                                //         };
+                                //       } else {
+                                //         return single_variant_data;
+                                //       }
+                                //     }
+                                //   ),
+                                // })
+                                setEditVariantData({
+                                  ...editVariantData,
+                                  price: e?.target?.value,
+                                })
+                              }}
+                            />
+                            </div>
+                          </div>
+                          <div className="w-full flex flex-col justify-start items-start">
+                            <label className="text-[13px]">Quantity</label>
+                            <input
+                              type="number"
+                              placeholder="eg. 2"
+                              value={editVariantData?.quantity}
+                              className="p-2 rounded-md block  border-gray-400 border w-full outline-none"
+                              onChange={(e) => {
+                                // setPageData({
+                                //   ...pageData,
+                                //   variant_data: pageData?.variant_data?.map(
+                                //     (single_variant_data, variant_key) => {
+                                //       if (single_variant_data?.id === activeVariantEditIndex) {
+                                //         return {
+                                //           ...single_variant_data,
+                                //           quantity: e?.target?.value,
+                                //         };
+                                //       } else {
+                                //         return single_variant_data;
+                                //       }
+                                //     }
+                                //   ),
+                                // })
+                                setEditVariantData({
+                                  ...editVariantData,
+                                  quantity: e?.target?.value,
+                                })
+                              }}
+                            />
+                          </div>
+                          <div className="w-full flex flex-col justify-start items-start">
+                            <label className="text-[13px]">SKU</label>
+                            <input
+                              type="text"
+                              placeholder="eg. TH0301"
+                              value={editVariantData?.sku}
+                              className="p-2 rounded-md block  border-gray-400 border w-full outline-none"
+                              onChange={(e) => {
+                                // setPageData({
+                                //   ...pageData,
+                                //   variant_data: pageData?.variant_data?.map(
+                                //     (single_variant_data, variant_key) => {
+                                //       if (single_variant_data?.id === activeVariantEditIndex) {
+                                //         return {
+                                //           ...single_variant_data,
+                                //           sku: e?.target?.value,
+                                //         };
+                                //       } else {
+                                //         return single_variant_data;
+                                //       }
+                                //     }
+                                //   ),
+                                // })
+                                setEditVariantData({
+                                  ...editVariantData,
+                                  sku: e?.target?.value,
+                                })
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="w-full flex justify-end items-center my-4">
+                        <button className="py-2 px-4 bg-[#35854b] text-[14px] rounded-[7px] text-white" onClick={() => {
+                          setEditPopUpModal(false)
+                          // setPageData({
+                          //   ...pageData,
+                          //   variant_data: [...pageData?.variant_data, {
+                          //     id: new Date().getTime(),
+                          //     variant_name: editVariantData?.variant_name,
+                          //     price: editVariantData?.price,
+                          //     quantity: editVariantData?.quantity,
+                          //     sku: editVariantData?.sku,
+                          //     unit: editVariantData?.unit,
+                          //   }],
+                          // })
+                          setPageData({
+                            ...pageData,
+                            variant_data: pageData?.variant_data?.map((v_data, v_i) => {
+                              if (v_i === activeVariantEditIndex) {
+                                return {
+                                  variant_name: editVariantData?.variant_name,
+                                  price: editVariantData?.price,
+                                  unit: editVariantData?.unit,
+                                  sku: editVariantData?.sku,
+                                  quantity: editVariantData?.quantity,
+                                  id: editVariantData?.id
+                                }
+                              }else {
+                                return v_data
+                              }
+                            })
+                          })
+                        }}>
+                          SUBMIT
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className={`w-full h-screen fixed inset-0 bg-black opacity-30 z-[80] ${editPopUpModal ? "block" : "hidden"}`} onClick={() => setEditPopUpModal(false)}></div>
                 </div>
               </div>
             </div>

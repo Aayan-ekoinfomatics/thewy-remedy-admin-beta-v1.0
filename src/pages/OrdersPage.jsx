@@ -346,7 +346,7 @@ const OrdersPage = () => {
                             </p>
                           </div>
                         )}
-                        {data?.status === "canceled" && (
+                        {data?.status === "cancelled" && (
                           <div className="flex flex-col gap-2">
                             <div className="flex min-w-[180px] gap-2">
                               <h1 className={`w-full text-center rounded-[5px] text-[12px] border ${data?.is_paid ? 'text-green-500' : 'text-gray-500'}`}>Is Paid</h1> <h1 className={`w-full rounded-[5px] text-center text-[12px] min-w-[110px] px-1 border ${data?.admin_placed ? 'text-green-500' : 'text-gray-500'}`}>Admin Placed</h1>
